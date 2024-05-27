@@ -16,8 +16,9 @@ namespace UserProvider
         private readonly DataContext _context = context;
 
         [Function("UpdateUser")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "put", Route = "users/{email}")] HttpRequest req, string email)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "put", Route = "UpdateUser")] HttpRequest req)
         {
+            string email = req.Query["email"];
             _logger.LogInformation("Received request to update user with email: {Email}", email);
             try
             {
