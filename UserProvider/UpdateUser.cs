@@ -36,9 +36,20 @@ namespace UserProvider
                 }
 
                 
+                if (string.IsNullOrEmpty(updatedUser.FirstName) ||
+                    string.IsNullOrEmpty(updatedUser.LastName) ||
+                    string.IsNullOrEmpty(updatedUser.Email))
+                {
+                    _logger.LogWarning("Missing required user data");
+                    return new BadRequestObjectResult("Missing required user data");
+                }
+
                 user.FirstName = updatedUser.FirstName;
                 user.LastName = updatedUser.LastName;
                 user.Biography = updatedUser.Biography;
+                user.PhoneNumber = updatedUser.PhoneNumber;
+                user.UserName = updatedUser.Email;
+                user.Email = updatedUser.Email;
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
